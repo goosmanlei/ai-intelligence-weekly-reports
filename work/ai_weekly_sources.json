@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "selection_policy": {
+    "primary_first": true,
+    "secondary_requires_attribution": true,
+    "rumors_are_excluded": true,
+    "high_impact_claims_need_cross_check": true,
+    "regions": [
+      "global",
+      "china"
+    ],
+    "topics": [
+      "models_and_research",
+      "agents_and_developer_tools",
+      "hardware_and_compute",
+      "applications_and_industry",
+      "open_source",
+      "policy_and_governance",
+      "capital_and_organization"
+    ]
+  },
+  "primary_sources": {
+    "global": [
+      {
+        "name": "Frontier labs",
+        "domains": [
+          "openai.com",
+          "anthropic.com",
+          "deepmind.google",
+          "blog.google",
+          "ai.meta.com",
+          "mistral.ai",
+          "x.ai"
+        ]
+      },
+      {
+        "name": "Developer platforms and open source",
+        "domains": [
+          "huggingface.co",
+          "github.blog",
+          "aws.amazon.com",
+          "azure.microsoft.com",
+          "microsoft.com"
+        ]
+      },
+      {
+        "name": "Hardware and infrastructure",
+        "domains": [
+          "nvidia.com",
+          "amd.com",
+          "intel.com",
+          "broadcom.com",
+          "tsmc.com"
+        ]
+      },
+      {
+        "name": "Research and policy",
+        "domains": [
+          "arxiv.org",
+          "aclanthology.org",
+          "nips.cc",
+          "whitehouse.gov",
+          "nist.gov",
+          "digital-strategy.ec.europa.eu",
+          "gov.uk"
+        ]
+      }
+    ],
+    "china": [
+      {
+        "name": "Models and labs",
+        "domains": [
+          "deepseek.com",
+          "qwenlm.github.io",
+          "modelscope.cn",
+          "bigmodel.cn",
+          "z.ai",
+          "moonshot.cn",
+          "kimi.com",
+          "minimax.io",
+          "baichuan-ai.com",
+          "hunyuan.tencent.com",
+          "seed.bytedance.com"
+        ]
+      },
+      {
+        "name": "Platforms and applications",
+        "domains": [
+          "volcengine.com",
+          "cloud.tencent.com",
+          "cloud.baidu.com",
+          "ai.baidu.com",
+          "modelscope.cn"
+        ]
+      },
+      {
+        "name": "Hardware and infrastructure",
+        "domains": [
+          "hiascend.com",
+          "mindspore.cn",
+          "huawei.com",
+          "cambricon.com"
+        ]
+      },
+      {
+        "name": "Policy and industry research",
+        "domains": [
+          "gov.cn",
+          "miit.gov.cn",
+          "cac.gov.cn",
+          "ndrc.gov.cn",
+          "caict.ac.cn"
+        ]
+      }
+    ]
+  },
+  "secondary_sources": {
+    "global": [
+      "reuters.com",
+      "bloomberg.com",
+      "ft.com",
+      "technologyreview.com",
+      "techcrunch.com",
+      "theverge.com",
+      "arstechnica.com",
+      "semianalysis.com"
+    ],
+    "china": [
+      "36kr.com",
+      "latepost.com",
+      "caixin.com",
+      "qbitai.com",
+      "jiqizhixin.com",
+      "infoq.cn",
+      "leiphone.com"
+    ]
+  }
+}
