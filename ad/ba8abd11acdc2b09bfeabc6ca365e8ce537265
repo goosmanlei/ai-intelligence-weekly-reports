@@ -1,0 +1,47 @@
+.gitignore
+  s_c8b2ea9b7f0e20::t_cb07671a699e1d 1-6
+README.md
+  s_c8b2ea9b7f0e20::t_43cb63219c6685 1-29
+docs/automation/ai-frontiers-weekly-prompt.md
+  s_c8b2ea9b7f0e20::t_84425e9346a235 1-47
+outputs/weekly-markdown/ai-frontiers-weekly-2026-07-13.md
+  s_c8b2ea9b7f0e20::t_d767709ea0d379 1-43
+outputs/weekly-markdown/ai-frontiers-weekly-2026-07-20.md
+  s_c8b2ea9b7f0e20::t_40917664c24c31 1-55
+outputs/weekly-markdown/ai-frontiers-weekly-2026-07-27.md
+  s_c8b2ea9b7f0e20::t_d9b29819402c07 1-65
+outputs/weekly-markdown/ai-frontiers-weekly-2026-08-03.md
+  s_c8b2ea9b7f0e20::t_cdebd79f892061 1-67
+outputs/weekly-markdown/anthropic-claude-code-x-weekly-2026-06-22.md
+  s_c8b2ea9b7f0e20::t_313ecb1cff5fd6 1-48
+outputs/weekly-markdown/anthropic-claude-code-x-weekly-2026-06-26-preview.md
+  s_c8b2ea9b7f0e20::t_e8c572ef3feb47 1-88
+outputs/weekly-markdown/anthropic-claude-code-x-weekly-2026-06-29.md
+  s_c8b2ea9b7f0e20::t_12bf635f5be33f 1-92
+outputs/weekly-markdown/anthropic-claude-code-x-weekly-2026-07-06.md
+  s_c8b2ea9b7f0e20::t_97f1924e699b86 1-135
+outputs/weekly-markdown/global-china-ai-weekly-2026-08-03.md
+  s_c8b2ea9b7f0e20::t_b8580d47d32171 1-170
+tests/test_publish_weekly_report.py
+  s_c8b2ea9b7f0e20::t_42d132076eec2a 1-76
+work/publish_weekly_report.py
+  s_c8b2ea9b7f0e20::t_bafc2fdcd57627 1-116
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "adba8abd11acdc2b09bfeabc6ca365e8ce537265",
+  "prompts": {},
+  "sessions": {
+    "s_c8b2ea9b7f0e20": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eed4c-5d08-72d0-8816-7dd034c02e00",
+        "model": "unknown"
+      },
+      "human_author": "leiguoguo <leiguoguo@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
