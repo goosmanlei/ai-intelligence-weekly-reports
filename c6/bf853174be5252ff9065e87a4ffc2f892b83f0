@@ -1,0 +1,23 @@
+tests/test_fetch_x_list_window.py
+  s_c8b2ea9b7f0e20::t_9be39a6883647f 49-52,329-332,338-414
+work/fetch_x_list_window.py
+  s_c8b2ea9b7f0e20::t_cb261780091ec9 65,227-234,252-261,296-298
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "c6bf853174be5252ff9065e87a4ffc2f892b83f0",
+  "prompts": {},
+  "sessions": {
+    "s_c8b2ea9b7f0e20": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eed4c-5d08-72d0-8816-7dd034c02e00",
+        "model": "unknown"
+      },
+      "human_author": "leiguoguo <leiguoguo@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
