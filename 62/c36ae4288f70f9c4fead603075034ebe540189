@@ -1,0 +1,23 @@
+outputs/weekly-markdown/global-china-ai-weekly-2026-08-10.md
+  s_c8b2ea9b7f0e20::t_4f1fdbf5ea28c9 1-132
+work/x_list_state.json
+  s_c8b2ea9b7f0e20::t_5c5dac77a968ac 3-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "62c36ae4288f70f9c4fead603075034ebe540189",
+  "prompts": {},
+  "sessions": {
+    "s_c8b2ea9b7f0e20": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eed4c-5d08-72d0-8816-7dd034c02e00",
+        "model": "unknown"
+      },
+      "human_author": "leiguoguo <leiguoguo@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
