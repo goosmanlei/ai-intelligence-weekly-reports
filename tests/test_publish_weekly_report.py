@@ -17,7 +17,7 @@ def git(repo: Path, *args: str) -> str:
 
 
 class PublishWeeklyReportTest(unittest.TestCase):
-    def test_commits_and_pushes_only_report_files(self):
+    def test_commits_and_pushes_only_report_and_state_files(self):
         with tempfile.TemporaryDirectory() as temp_dir:
             base = Path(temp_dir)
             repo = base / "repo"
@@ -32,12 +32,16 @@ class PublishWeeklyReportTest(unittest.TestCase):
             pdf = repo / "outputs/weekly-pdf/global-china-ai-weekly-2026-08-03.pdf"
             markdown = repo / "outputs/weekly-markdown/global-china-ai-weekly-2026-08-03.md"
             state = repo / "work/x_list_state.json"
+            project_state = repo / "STATE.md"
             secret = repo / ".env"
+            unrelated = repo / "notes.txt"
             for path, content in (
                 (pdf, "pdf"),
                 (markdown, "report"),
                 (state, "{}"),
+                (project_state, "current state"),
                 (secret, "X_BEARER_TOKEN=secret"),
+                (unrelated, "do not publish"),
             ):
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(content, encoding="utf-8")
@@ -57,10 +61,12 @@ class PublishWeeklyReportTest(unittest.TestCase):
                 {
                     "outputs/weekly-markdown/global-china-ai-weekly-2026-08-03.md",
                     "outputs/weekly-pdf/global-china-ai-weekly-2026-08-03.pdf",
+                    "STATE.md",
                     "work/x_list_state.json",
                 },
             )
             self.assertNotIn(".env", tracked)
+            self.assertNotIn("notes.txt", tracked)
             self.assertEqual(git(repo, "rev-parse", "HEAD"), git(remote, "rev-parse", "refs/heads/main"))
 
     def test_rejects_environment_file(self):

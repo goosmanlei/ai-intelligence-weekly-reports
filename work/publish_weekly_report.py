@@ -16,6 +16,7 @@ def parse_args():
     parser.add_argument("--pdf", required=True)
     parser.add_argument("--markdown", required=True)
     parser.add_argument("--state-file", default="work/x_list_state.json")
+    parser.add_argument("--project-state-file", default="STATE.md")
     parser.add_argument("--repo", default=".")
     parser.add_argument("--remote", default="origin")
     parser.add_argument("--branch", default="main")
@@ -64,6 +65,7 @@ def publish_report(
     pdf: str,
     markdown: str,
     state_file: str,
+    project_state_file: Optional[str] = "STATE.md",
     remote: str = "origin",
     branch: str = "main",
 ) -> dict:
@@ -75,6 +77,9 @@ def publish_report(
         resolve_publish_path(root, pdf),
         resolve_publish_path(root, markdown),
         resolve_publish_path(root, state_file, required=False),
+        resolve_publish_path(root, project_state_file, required=False)
+        if project_state_file
+        else None,
     ]
     relative_paths = [str(path) for path in publish_paths if path is not None]
     run_git(root, ["add", "--", *relative_paths])
@@ -99,6 +104,7 @@ def main():
         pdf=args.pdf,
         markdown=args.markdown,
         state_file=args.state_file,
+        project_state_file=args.project_state_file,
         remote=args.remote,
         branch=args.branch,
     )

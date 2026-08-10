@@ -4,6 +4,12 @@ Automation: Global & China AI Intelligence Weekly PDF
 
 生成一份新的中文 PDF 周报，覆盖全球与国内最新 AI 进展。统计窗口按 Asia/Shanghai 计算，为触发时刻向前回溯 7 天，窗口为左闭右开；文件名日期使用窗口结束日 `YYYY-MM-DD`。
 
+## 项目上下文
+
+1. 自动化工作目录必须是 `~/codex-path/1003.例行/全球与国内 AI 情报周报`。该目录是唯一 Source of Truth，不读取或依赖旧 Codex Thread 和旧工作目录。
+2. 开始前读取 `README.md`、`AGENTS.md`、`STATE.md`、`work/ai_weekly_sources.json` 和 `work/x_list_state.json`，检查 `git status --short` 及 `.env` 是否存在；禁止输出 `.env` 内容。
+3. 若存在来源不明的工作区改动，不得覆盖或回滚。若会影响本次运行，应停止并准确说明冲突。
+
 ## 采集
 
 1. 读取 `work/ai_weekly_sources.json`，优先覆盖其中列出的官方一手源。围绕模型与研究、Agent 与开发工具、芯片与算力、应用落地、开源生态、政策治理、资本与组织变动七类主题，分别检索全球和国内信息。
@@ -41,7 +47,7 @@ Automation: Global & China AI Intelligence Weekly PDF
    `/Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 work/render_weekly_digest_pdf.py --input outputs/weekly-markdown/global-china-ai-weekly-YYYY-MM-DD.md --output outputs/weekly-pdf/global-china-ai-weekly-YYYY-MM-DD.pdf`
 2. 用 `/Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/pdfinfo` 验证 PDF 可读取；再用 `/Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/pdftoppm` 渲染全部页面并检查标题、分页、中文字符、链接文本和页尾没有裁切或重叠。
 3. 不再清理历史周报；`outputs/weekly-pdf/` 和 `outputs/weekly-markdown/` 中的所有历史版本必须永久保留。
-4. PDF 验收成功后运行：
-   `python3 work/publish_weekly_report.py --date YYYY-MM-DD --pdf outputs/weekly-pdf/global-china-ai-weekly-YYYY-MM-DD.pdf --markdown outputs/weekly-markdown/global-china-ai-weekly-YYYY-MM-DD.md --state-file work/x_list_state.json`
+4. PDF 验收成功后，替换更新 `STATE.md` 中的最近成功周期、事件数、X 采集统计、PDF 验收和下一计划运行时间；不要追加历史流水账。然后运行：
+   `python3 work/publish_weekly_report.py --date YYYY-MM-DD --pdf outputs/weekly-pdf/global-china-ai-weekly-YYYY-MM-DD.pdf --markdown outputs/weekly-markdown/global-china-ai-weekly-YYYY-MM-DD.md --state-file work/x_list_state.json --project-state-file STATE.md`
    该命令必须成功提交并推送到 GitHub `origin/main`。禁止暂存或提交 `.env`、Bearer Token、临时抓取 JSON、渲染中间文件或其他凭据。若推送失败，保留本地 PDF 和 commit，并在最终回复中明确失败原因，不能声称发布成功。
 5. 最终回复说明新 PDF 路径、统计窗口、全球/国内事件数、主要数据缺口、PDF 验收结果，以及 Git commit SHA 和 push 结果。不要把正文重复贴到回复中。
