@@ -62,7 +62,7 @@ def save_state_file(path: Path, state: Dict[str, object]) -> None:
 
 
 def parse_iso(ts: str) -> datetime:
-    return datetime.fromisoformat(ts).astimezone(timezone.utc)
+    return datetime.fromisoformat(ts.replace("Z", "+00:00")).astimezone(timezone.utc)
 
 
 def parse_x_datetime(ts: str) -> datetime:
@@ -224,7 +224,14 @@ def fetch_window(
     state: Dict[str, object],
 ) -> dict:
     pagination_token = None
-    stop_at_tweet_id = str(state.get("last_seen_tweet_id") or "").strip() or None
+    state_last_seen_tweet_id = str(state.get("last_seen_tweet_id") or "").strip() or None
+    state_last_seen_created_at = str(state.get("last_seen_created_at") or "").strip() or None
+    stop_at_tweet_id = state_last_seen_tweet_id
+    boundary_ignored_reason = None
+    if stop_at_tweet_id and state_last_seen_created_at:
+        if parse_iso(state_last_seen_created_at) >= start:
+            stop_at_tweet_id = None
+            boundary_ignored_reason = "last_seen_created_at_not_before_window_start"
     pages_fetched = 0
     api_posts_seen = 0
     posts = []
@@ -242,11 +249,16 @@ def fetch_window(
             raise_api_error(status, page)
 
         page_data = page.get("data", [])
-        if pages_fetched == 0 and page_data:
-            newest_seen_tweet_id = page_data[0].get("id")
-            created_at = page_data[0].get("created_at")
-            if created_at:
-                newest_seen_created_at = parse_x_datetime(created_at).isoformat()
+        if newest_seen_tweet_id is None:
+            for tweet in page_data:
+                created_at = tweet.get("created_at")
+                if not created_at:
+                    continue
+                created = parse_x_datetime(created_at)
+                if created < end:
+                    newest_seen_tweet_id = tweet.get("id")
+                    newest_seen_created_at = created.isoformat()
+                    break
 
         pages_fetched += 1
         api_posts_seen += len(page_data)
@@ -281,7 +293,9 @@ def fetch_window(
             "stop_reason": stop_reason,
             "newest_seen_tweet_id": newest_seen_tweet_id,
             "newest_seen_created_at": newest_seen_created_at,
-            "last_seen_tweet_id_before_run": stop_at_tweet_id,
+            "last_seen_tweet_id_before_run": state_last_seen_tweet_id,
+            "incremental_boundary_applied": stop_at_tweet_id is not None,
+            "boundary_ignored_reason": boundary_ignored_reason,
         },
         "posts": posts,
     }

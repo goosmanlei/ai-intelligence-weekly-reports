@@ -46,6 +46,10 @@ class FetchXListWindowTests(unittest.TestCase):
         self.assertEqual(env["X_BEARER_TOKEN"], "quoted-token")
         self.assertEqual(env["X_LIST_ID"], "2068180761916977611")
 
+    def test_parse_iso_accepts_utc_z_suffix(self):
+        parsed = self.mod.parse_iso("2026-08-10T03:02:19.717Z")
+        self.assertEqual(parsed.isoformat(), "2026-08-10T03:02:19.717000+00:00")
+
     def test_load_state_file_returns_empty_when_missing(self):
         state = self.mod.load_state_file(Path("/tmp/does-not-exist-x-list-state.json"))
         self.assertEqual(state, {})
@@ -322,11 +326,91 @@ class FetchXListWindowTests(unittest.TestCase):
                 start,
                 end,
                 max_results=100,
-                state={"last_seen_tweet_id": "t2"},
+                state={
+                    "last_seen_tweet_id": "t2",
+                    "last_seen_created_at": "2026-06-21T23:59:00+00:00",
+                },
             )
 
         self.assertEqual([post["id"] for post in result["posts"]], ["t3"])
         self.assertEqual(result["source"]["stop_reason"], "reached_last_seen_tweet_id")
+
+    def test_fetch_window_ignores_boundary_that_is_inside_current_window(self):
+        start = datetime(2026, 6, 22, 0, 0, 0, tzinfo=timezone.utc)
+        end = datetime(2026, 6, 29, 0, 0, 0, tzinfo=timezone.utc)
+        page = {
+            "data": [
+                {
+                    "id": "t3",
+                    "text": "new post",
+                    "author_id": "u1",
+                    "created_at": "2026-06-24T02:26:17.000Z",
+                },
+                {
+                    "id": "t2",
+                    "text": "incorrectly advanced boundary",
+                    "author_id": "u1",
+                    "created_at": "2026-06-23T02:26:17.000Z",
+                },
+            ],
+            "includes": {"users": [{"id": "u1", "name": "Alice", "username": "alice"}]},
+            "meta": {"result_count": 2},
+        }
+
+        with mock.patch.object(self.mod, "run_curl_json", return_value=(200, page)):
+            result = self.mod.fetch_window(
+                "2068180761916977611",
+                "token",
+                start,
+                end,
+                max_results=100,
+                state={
+                    "last_seen_tweet_id": "t2",
+                    "last_seen_created_at": "2026-06-23T02:26:17+00:00",
+                },
+            )
+
+        self.assertEqual([post["id"] for post in result["posts"]], ["t3", "t2"])
+        self.assertFalse(result["source"]["incremental_boundary_applied"])
+        self.assertEqual(
+            result["source"]["boundary_ignored_reason"],
+            "last_seen_created_at_not_before_window_start",
+        )
+
+    def test_fetch_window_does_not_advance_state_past_window_end(self):
+        start = datetime(2026, 6, 22, 0, 0, 0, tzinfo=timezone.utc)
+        end = datetime(2026, 6, 29, 0, 0, 0, tzinfo=timezone.utc)
+        page = {
+            "data": [
+                {
+                    "id": "after",
+                    "text": "after window",
+                    "author_id": "u1",
+                    "created_at": "2026-06-29T00:01:00.000Z",
+                },
+                {
+                    "id": "inside",
+                    "text": "inside window",
+                    "author_id": "u1",
+                    "created_at": "2026-06-28T23:59:00.000Z",
+                },
+            ],
+            "includes": {"users": [{"id": "u1", "name": "Alice", "username": "alice"}]},
+            "meta": {"result_count": 2},
+        }
+
+        with mock.patch.object(self.mod, "run_curl_json", return_value=(200, page)):
+            result = self.mod.fetch_window(
+                "2068180761916977611",
+                "token",
+                start,
+                end,
+                max_results=100,
+                state={},
+            )
+
+        self.assertEqual(result["source"]["newest_seen_tweet_id"], "inside")
+        self.assertEqual(result["source"]["newest_seen_created_at"], "2026-06-28T23:59:00+00:00")
 
 
 if __name__ == "__main__":
