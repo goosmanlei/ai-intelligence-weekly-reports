@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import re
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -69,7 +70,17 @@ def parse_blocks(text):
     return blocks
 
 
-def render_pages(blocks, fonts):
+def extract_report_date(blocks):
+    for block_type, text in blocks:
+        if block_type != "title":
+            continue
+        match = re.search(r"(?:\(|（)(\d{4}-\d{2}-\d{2})(?:\)|）)", text)
+        if match:
+            return match.group(1)
+    raise ValueError("report title must contain a YYYY-MM-DD date")
+
+
+def render_pages(blocks, fonts, report_date):
     pages = []
     style_map = {
         "title": (fonts["title"], 18),
@@ -158,7 +169,7 @@ def render_pages(blocks, fonts):
         if page_number > 1:
             page_draw.text(
                 (MARGIN_X, 42),
-                "全球与国内 AI 情报周报 | 2026-08-03",
+                f"全球与国内 AI 情报周报 | {report_date}",
                 font=fonts["meta"],
                 fill="#9CA3AF",
             )
@@ -186,7 +197,8 @@ def main():
 
     text = input_path.read_text(encoding="utf-8")
     fonts = load_fonts()
-    pages = render_pages(parse_blocks(text), fonts)
+    blocks = parse_blocks(text)
+    pages = render_pages(blocks, fonts, extract_report_date(blocks))
     rgb_pages = [page.convert("RGB") for page in pages]
     rgb_pages[0].save(
         output_path,
