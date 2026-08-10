@@ -1,0 +1,31 @@
+AGENTS.md
+  s_c8b2ea9b7f0e20::t_aa9f78dbf184fa 1-54
+README.md
+  s_c8b2ea9b7f0e20::t_8d78aa37ae6db5 3,5,7,9,11-21,24-28,31-60,62,64
+STATE.md
+  s_c8b2ea9b7f0e20::t_5d144e334a9042 1-50
+docs/automation/ai-frontiers-weekly-prompt.md
+  s_c8b2ea9b7f0e20::t_de124d19600c74 7-12,50-51
+tests/test_publish_weekly_report.py
+  s_c8b2ea9b7f0e20::t_48f7627a55241d 20,35,37,42,44,64,69
+work/publish_weekly_report.py
+  s_c8b2ea9b7f0e20::t_6f2a72fe525208 19,68,80-82,107
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5a4a053f770b323ca86c48d818c8edae4d3bf04a",
+  "prompts": {},
+  "sessions": {
+    "s_c8b2ea9b7f0e20": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019eed4c-5d08-72d0-8816-7dd034c02e00",
+        "model": "unknown"
+      },
+      "human_author": "leiguoguo <leiguoguo@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
