@@ -6,9 +6,9 @@
 
 ## 当前配置
 
-- 项目根目录：`~/codex-path/1003.例行/全球与国内 AI 情报周报`
+- 项目根目录：`/Users/bytedance/codex-path/1003.routine/WeeklyAIReport`
 - 自动化 ID：`ai-brief-models-produc-weekly-pdf`
-- 自动化迁移状态：项目文件迁移完成；Codex UI 尚未把本目录注册为项目，因此现有自动化暂仍为绑定旧 Thread 的 heartbeat。注册项目后需将同一自动化 ID 更新为本地目录 cron，再解除旧 Thread 依赖。
+- 自动化迁移状态：自动化已更新为当前目录的独立本地 cron，不再依赖旧 Thread 或旧工作目录。
 - 计划：每周一 11:00，时区 Asia/Shanghai
 - Git 远端：`git@github.com:goosmanlei/ai-intelligence-weekly-reports.git`
 - 发布分支：`main`
@@ -17,15 +17,16 @@
 - 凭据：项目根目录 `.env`，已被 `.gitignore` 排除
 - X 增量游标：`work/x_list_state.json`
 - 来源策略：`work/ai_weekly_sources.json`
+- PDF 渲染：矢量文字、嵌入中文字体、来源标题可点击；2026-09-14 周报已通过文字、嵌入字体、链接和全页渲染验收。
 
 ## 最近成功周期
 
-- 周报日期：2026-09-07
-- 统计窗口：2026-08-31 11:02:41 至 2026-09-07 11:02:41（Asia/Shanghai，左闭右开）
-- 最终事件：全球 5 条，国内 3 条
-- X 采集：3 页、56 条 API 帖子、窗口内 44 条
-- 报告提交：`eee24aefedce11ffd2b3eade07fc1ad0c821de0c`（已推送）
-- PDF：已通过 `pdfinfo` 可读性验证及全部 4 页渲染视觉验收；标题、中文、分页、来源文本与页尾均无裁切或重叠
+- 周报日期：2026-09-14
+- 统计窗口：2026-09-07 11:53:50 至 2026-09-14 11:53:50（Asia/Shanghai，左闭右开）
+- 最终事件：全球 6 条，国内 3 条
+- X 采集：3 页、56 条 API 帖子、窗口内 56 条
+- 报告提交：待本次受控发布命令返回 commit SHA 后确认
+- PDF：已通过 `pdfinfo` 可读性验证、`pypdf` 可搜索文字和链接注释核验及全部 3 页渲染视觉验收；中文字体已嵌入，标题、中文、分页、来源文本与页尾均无裁切或重叠
 
 ## 当前有效决策
 
@@ -36,9 +37,7 @@
 
 ## 下一步
 
-- 在 Codex UI 中将 `~/codex-path/1003.例行/全球与国内 AI 情报周报` 添加或打开为项目。
-- 项目注册后，把自动化 `ai-brief-models-produc-weekly-pdf` 更新为该项目的独立本地 cron；使用 `docs/automation/ai-frontiers-weekly-prompt.md`，保持周一 11:00 和 ACTIVE。
-- 下一计划运行：2026-09-14 11:00（Asia/Shanghai）。
+- 下一计划运行：2026-09-21 11:00（Asia/Shanghai）。
 - 运行前确认 Git 工作区干净、`.env` 存在、测试通过。
 - 若自动化、来源、X List、运行时间或发布策略变化，替换更新本文件对应项。
 
