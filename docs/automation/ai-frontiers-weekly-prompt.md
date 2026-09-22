@@ -6,7 +6,7 @@ Automation: Global & China AI Intelligence Weekly PDF
 
 ## 项目上下文
 
-1. 自动化工作目录必须是 `~/codex-path/1003.例行/全球与国内 AI 情报周报`。该目录是唯一 Source of Truth，不读取或依赖旧 Codex Thread 和旧工作目录。
+1. 自动化工作目录必须是 `/Users/bytedance/codex-path/1003.routine/WeeklyAIReport`。该目录是唯一 Source of Truth，不读取或依赖旧 Codex Thread 和旧工作目录。
 2. 开始前读取 `README.md`、`AGENTS.md`、`STATE.md`、`work/ai_weekly_sources.json` 和 `work/x_list_state.json`，检查 `git status --short` 及 `.env` 是否存在；禁止输出 `.env` 内容。
 3. 若存在来源不明的工作区改动，不得覆盖或回滚。若会影响本次运行，应停止并准确说明冲突。
 
@@ -43,11 +43,13 @@ Automation: Global & China AI Intelligence Weekly PDF
 
 ## 输出与验收
 
-1. 使用以下命令生成 PDF：
+1. 首次创建本期 PDF 前，按 PDF skill 要求使用稳定绝对入口执行一次交付标记命令，不得把 `container_tools` 当作仓库内相对路径：
+   `node /Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime/plugins/pdf/skills/pdf/container_tools/mark_artifact_operation_started.mjs --operation-kind create --expected-output-count 1 --output-format pdf`
+2. 使用以下命令生成 PDF：
    `/Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 work/render_weekly_digest_pdf.py --input outputs/weekly-markdown/global-china-ai-weekly-YYYY-MM-DD.md --output outputs/weekly-pdf/global-china-ai-weekly-YYYY-MM-DD.pdf`
-2. 用 `/Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/pdfinfo` 验证 PDF 可读取；再用 `/Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/pdftoppm` 渲染全部页面并检查标题、分页、中文字符、链接文本和页尾没有裁切或重叠。
-3. 不再清理历史周报；`outputs/weekly-pdf/` 和 `outputs/weekly-markdown/` 中的所有历史版本必须永久保留。
-4. PDF 验收成功后，替换更新 `STATE.md` 中的最近成功周期、事件数、X 采集统计、PDF 验收和下一计划运行时间；不要追加历史流水账。然后运行：
+3. 确认 PDF 正文为可选择、可搜索的矢量文字，中文字体已嵌入，来源标题为可点击链接。用 `/Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/pdfinfo` 验证 PDF 可读取；再用 `/Users/bytedance/.cache/codex-runtimes/codex-primary-runtime/dependencies/bin/override/pdftoppm` 渲染全部页面并检查标题、分页、中文字符、链接文本和页尾没有裁切或重叠。
+4. 不再清理历史周报；`outputs/weekly-pdf/` 和 `outputs/weekly-markdown/` 中的所有历史版本必须永久保留。
+5. PDF 验收成功后，替换更新 `STATE.md` 中的最近成功周期、事件数、X 采集统计、PDF 验收和下一计划运行时间；不要追加历史流水账。然后运行：
    `python3 work/publish_weekly_report.py --date YYYY-MM-DD --pdf outputs/weekly-pdf/global-china-ai-weekly-YYYY-MM-DD.pdf --markdown outputs/weekly-markdown/global-china-ai-weekly-YYYY-MM-DD.md --state-file work/x_list_state.json --project-state-file STATE.md`
    该命令必须成功提交并推送到 GitHub `origin/main`。禁止暂存或提交 `.env`、Bearer Token、临时抓取 JSON、渲染中间文件或其他凭据。若推送失败，保留本地 PDF 和 commit，并在最终回复中明确失败原因，不能声称发布成功。
-5. 最终回复说明新 PDF 路径、统计窗口、全球/国内事件数、主要数据缺口、PDF 验收结果，以及 Git commit SHA 和 push 结果。不要把正文重复贴到回复中。
+6. 最终回复说明新 PDF 路径、统计窗口、全球/国内事件数、主要数据缺口、PDF 验收结果，以及 Git commit SHA 和 push 结果。不要把正文重复贴到回复中。

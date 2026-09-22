@@ -4,7 +4,7 @@
 
 项目名称：全球与国内 AI 情报周报。
 
-Codex 的职责是持续采集、核验、筛选、中文总结、生成并验收每周 AI 情报周报，同时维护增量状态、项目文档和 GitHub 历史。项目根目录 `~/codex-path/1003.例行/全球与国内 AI 情报周报` 是唯一长期上下文来源。
+Codex 的职责是持续采集、核验、筛选、中文总结、生成并验收每周 AI 情报周报，同时维护增量状态、项目文档和 GitHub 历史。项目根目录 `/Users/bytedance/codex-path/1003.routine/WeeklyAIReport` 是唯一长期上下文来源。
 
 ## 启动规则
 
@@ -35,6 +35,7 @@ Codex 的职责是持续采集、核验、筛选、中文总结、生成并验�
 
 - 每期创建带窗口结束日期的 `outputs/weekly-markdown/global-china-ai-weekly-YYYY-MM-DD.md` 和同名 PDF。
 - Markdown 与 PDF 永久保留，不执行数量裁剪；不得覆盖已有日期文件，除非明确修复同一期错误并说明。
+- PDF 正文必须以可选择、可搜索的矢量文字生成，嵌入中文字体，并将来源标题渲染为可点击链接；不得把整页先栅格化再封装为 PDF。
 - PDF 必须通过 `pdfinfo` 可读性验证，并渲染全部页面做视觉检查，确认中文、标题、分页、链接文本和页尾无裁切或重叠。
 - 验收成功后更新 `STATE.md` 的当前状态，再使用 `work/publish_weekly_report.py` 只提交本期 Markdown、PDF、`work/x_list_state.json` 和 `STATE.md`，推送到 `origin/main`。
 - 推送失败时保留本地文件和 commit，准确报告失败；不得声称发布成功。

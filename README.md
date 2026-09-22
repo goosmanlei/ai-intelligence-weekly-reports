@@ -4,7 +4,7 @@
 
 项目根目录固定为：
 
-`~/codex-path/1003.例行/全球与国内 AI 情报周报`
+`/Users/bytedance/codex-path/1003.routine/WeeklyAIReport`
 
 该目录是长期任务唯一的 Source of Truth。Codex Thread 只是可替换的执行窗口，不得依赖旧 Thread 或旧工作目录恢复任务。
 
