@@ -2,11 +2,7 @@
 
 本项目每周生成一份中文 AI 情报周报，分别覆盖全球与国内的模型与研究、Agent 与开发工具、芯片与算力、应用落地、开源生态、政策治理、资本与组织变动，并将 Markdown、PDF 和采集游标持久化到 GitHub。
 
-项目根目录固定为：
-
-`/Users/bytedance/codex-path/1003.routine/WeeklyAIReport`
-
-该目录是长期任务唯一的 Source of Truth。Codex Thread 只是可替换的执行窗口，不得依赖旧 Thread 或旧工作目录恢复任务。
+本项目根目录是长期任务唯一的 Source of Truth。Codex Thread 只是可替换的执行窗口，不得依赖旧 Thread 或旧工作目录恢复任务。
 
 ## 新 Thread 启动顺序
 

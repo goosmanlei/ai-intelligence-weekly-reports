@@ -6,7 +6,7 @@ Automation: Global & China AI Intelligence Weekly PDF
 
 ## 项目上下文
 
-1. 自动化工作目录必须是 `/Users/bytedance/codex-path/1003.routine/WeeklyAIReport`。该目录是唯一 Source of Truth，不读取或依赖旧 Codex Thread 和旧工作目录。
+1. 自动化应以本项目根目录为当前工作目录。该目录是唯一 Source of Truth，不读取或依赖旧 Codex Thread 和旧工作目录。
 2. 开始前读取 `README.md`、`AGENTS.md`、`STATE.md`、`work/ai_weekly_sources.json` 和 `work/x_list_state.json`，检查 `git status --short` 及 `.env` 是否存在；禁止输出 `.env` 内容。
 3. 若存在来源不明的工作区改动，不得覆盖或回滚。若会影响本次运行，应停止并准确说明冲突。
 
