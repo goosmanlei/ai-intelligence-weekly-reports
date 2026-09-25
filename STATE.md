@@ -7,8 +7,8 @@
 ## 当前配置
 
 - 自动化 ID：`ai-brief-models-produc-weekly-pdf`
-- 自动化迁移状态：ACTIVE 的独立本地 cron；`target.type=project`，绑定 App Server 登记的本地项目 `01a0ca05-1779-7820-81db-c9faf0769ac6`，项目根与 `cwds` 均为当前目录，不依赖旧 Thread 或旧工作目录。
-- 路径收敛状态：本项目文档已改用当前工作目录定位；定时任务自身的顶层 Prompt 仍含本机项目绝对路径。2026-09-25 自动化界面控制拒绝访问 `com.openai.codex`，尚未同步该句；`cwds` 和 PDF 工具绝对路径保持原值。
+- 自动化迁移状态：ACTIVE 的独立本地 cron；`target.type=project`，绑定当前任务登记的本地项目 `37c03ba1-0c17-4f16-a7f3-28ec04e470f5`，项目根与 `cwds` 均为当前目录，不依赖旧 Thread 或旧工作目录。
+- 路径收敛状态：2026-09-25 回读有效任务登记，项目文档和顶层 Prompt 均以当前工作目录定位本项目；调度、`cwds` 和 PDF 工具绝对路径保持原值。
 - 计划：每周一 11:00，时区 Asia/Shanghai
 - Git 远端：`git@github.com:goosmanlei/ai-intelligence-weekly-reports.git`
 - 发布分支：`main`
@@ -40,7 +40,6 @@
 - 下一计划运行：2026-09-28 11:00（Asia/Shanghai）。
 - 运行前确认 Git 工作区干净、`.env` 存在、测试通过。
 - 若自动化、来源、X List、运行时间或发布策略变化，替换更新本文件对应项。
-- 通过受支持的定时任务管理界面，把顶层 Prompt 中的项目自身绝对路径表述改为“当前工作目录即本项目根目录，是唯一 Source of Truth”，并回读任务登记；不直接修改 Codex 私有数据库。
 
 ## 新 Thread 接手检查
 
